@@ -37,7 +37,10 @@ const PgMutationUpsertPlugin: Plugin = builder => {
       fields,
       pgIntrospectionResultsByKind.class
         .filter((table: any) => !!table.namespace)
-        .filter((table: any) => !omit(table, 'upsert'))
+        .filter((table: any) =>
+            !(omit(table, 'upsert')
+            || omit(table, 'create')
+            || omit(table, 'update')))
         .filter((table: any) => table.isSelectable)
         .filter((table: any) => table.isInsertable)
         .filter((table: any) => table.isUpdatable)
